@@ -39,13 +39,10 @@ Concevoir un **trieur de résistances par reconnaissance à partir de photos** :
 - Moyens disponibles : FabLab (impression 3D), commandes passées par l'école
 - Légal : sécurité des machines et électrique (voir état de l'art)
 
-## 6. Architecture envisagée (à débattre)
+## 6. Architecture envisagée par l'équipe
 
-```
-Alimentation d'une pièce -> Prise de vue (caméra + éclairage fixe)
-  -> Traitement d'image -> Valeur (Ω, tolérance)
-  -> Commande (microcontrôleur / ordinateur embarqué) -> Tri (servo, trappe, convoyeur) -> Bacs
-```
+Caméra sur la machine, flux envoyé à un PC qui traite l'image, puis le PC envoie la valeur à un ESP32 qui pilote les actionneurs de tri.
+Analyse, risques et alternatives : voir `03-architecture-et-alternatives.md`.
 
 ## 7. Organisation de l'équipe
 
@@ -61,5 +58,5 @@ Alimentation d'une pièce -> Prise de vue (caméra + éclairage fixe)
 
 1. Valider les consignes (`00-consignes.md`) avec le tuteur
 2. Répondre aux `❓` de ce document
-3. Mener l'état de l'art (`02-etat-de-l-art.md`)
-4. Rédiger la note de cadrage, le SWOT, le planning, le RACI, le budget et les risques
+3. Compléter l'état de l'art (`02`) et trancher les alternatives (`03`)
+4. Finaliser la note de cadrage, le SWOT, le planning, le RACI, le budget et les risques (`04`)
