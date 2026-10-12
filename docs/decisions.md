@@ -13,3 +13,7 @@ Une ligne par décision importante : date, décision, options comparées, justif
 | | D7 | Mécanique de tri | Ouverte (M1 pressentie) | M1 à M8, `05` §3.3 | | `05` |
 | | D8 | Alimentation d'une pièce à la fois | Ouverte (F1 pour la v1) | F1 à F5 | | `05` |
 | | D9 | Nombre de bacs | Ouverte | `05` §4 | | `05` |
+| | D10 | Liaison PC ↔ ESP32 | Pressentie : USB série | USB, Wi-Fi, Bluetooth, MQTT | Fiabilité et simplicité (`06` §2) | `06` |
+| | D11 | Moteur de sélection | Pressentie : pas à pas (28BYJ-48, puis NEMA 17 si besoin) + capteur de référence | 5 moteurs comparés | `06` §4 | `06` |
+| | D12 | Mécanisme de lâcher et contrôle de chute | Pressentie : servo + volet, barrière infrarouge | `06` §5 et §6 | | `06` |
+| | D13 | Langage de programmation de l'ESP32 | Pressentie : Arduino-ESP32 | Arduino, ESP-IDF, MicroPython (compétences de l'équipe à confirmer) | `06` §8 | `06` |
