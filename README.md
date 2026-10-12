@@ -11,6 +11,8 @@ Projet SPI de 2ᵉ année (S3E, CESI) : une machine qui identifie une résistanc
 | [`docs/02-etat-de-l-art.md`](docs/02-etat-de-l-art.md) | État de l'art sourcé (projets existants, normes, références) |
 | [`docs/03-architecture-et-alternatives.md`](docs/03-architecture-et-alternatives.md) | Architecture envisagée, alternatives comparées, matrices de décision |
 | [`docs/04-organisation-projet.md`](docs/04-organisation-projet.md) | Rôles, cadrage, SWOT, planning, RACI, budget, risques, règles de travail |
+| [`docs/05-eclairage-et-mecanique.md`](docs/05-eclairage-et-mecanique.md) | Série E12, éclairage et boîte noire, solutions mécaniques et matrice de choix |
+| [`docs/decisions.md`](docs/decisions.md) | Journal des décisions (prises et ouvertes) |
 
 ## Référence
 
