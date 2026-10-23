@@ -8,7 +8,7 @@ Projet SPI de 2ᵉ année (S3E, CESI) : une machine qui identifie une résistanc
 |---------|------|
 | [`docs/00-consignes.md`](docs/00-consignes.md) | Consignes du projet (reconstituées d'après le projet de l'an dernier) |
 | [`docs/01-contexte.md`](docs/01-contexte.md) | Contexte, objectifs, périmètre, contraintes |
-| [`docs/02-etat-de-l-art.md`](docs/02-etat-de-l-art.md) | État de l'art : code couleur, solutions existantes, technologies d'identification et de tri, synthèse, législation et normes |
+| [`docs/02-etat-de-l-art.md`](docs/02-etat-de-l-art.md) | État de l'art : code couleur, solutions existantes (dont trieuses de vis), technologies d'identification et de tri, comparaison avec notre trieur, législation et normes |
 | [`docs/03-architecture-et-alternatives.md`](docs/03-architecture-et-alternatives.md) | Architecture envisagée, alternatives comparées, matrices de décision |
 | [`docs/04-organisation-projet.md`](docs/04-organisation-projet.md) | Rôles, cadrage, SWOT, planning, RACI, budget, risques, règles de travail |
 | [`docs/05-eclairage-et-mecanique.md`](docs/05-eclairage-et-mecanique.md) | Série E12, éclairage et boîte noire, solutions mécaniques et matrice de choix |

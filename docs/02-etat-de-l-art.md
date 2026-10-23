@@ -71,7 +71,32 @@ Deux familles coexistent : mesure électrique et vision par caméra.
 
 Les travaux portent sur la seule lecture d'image : un réseau LeNet-5 atteint 99,6 % sur 240 valeurs de 4 anneaux en conditions maîtrisées ([Puno et al., 2022](https://animorepository.dlsu.edu.ph/faculty_research/5749)), mais un CNN testé en temps réel par webcam chute d'environ 90 % à 72 % avec un mauvais éclairage ou un mauvais alignement ([JETSUR](https://journals.usm.edu.ph/jetsur/index.php/online/article/view/46)).
 
-**Ce qu'on en retient :** les projets par vision butent sur la fiabilité de lecture, ceux par mesure sur l'alimentation pièce à pièce. Aucun ne combine vrac en entrée, lecture fiable et tri multi-bacs.
+### 3.4 Machines voisines : les trieuses de vis et de petites pièces
+
+Notre machine ressemble beaucoup plus à une **trieuse de vis** qu'à un testeur de résistances. Elle enchaîne les quatre mêmes fonctions : isoler une pièce dans un vrac, la présenter devant un capteur, l'identifier, puis l'envoyer vers le bon bac. La seule vraie différence est le critère de tri : une vis se trie par sa **forme et ses dimensions**, une résistance par la **couleur** de ses anneaux. Les trieuses de vis sont un domaine bien plus mûr. Il est donc utile de regarder comment elles résolvent les problèmes que nous allons rencontrer.
+
+| Famille | Exemple | Alimentation | Identification | Tri | Cadence | Coût |
+|---|---|---|---|---|---|---|
+| Trieuse optique industrielle à plateau de verre | [Qualimatest QMTInspect-R](https://www.saphir.fr/pdf/Products/QMTInspect-R_Datasheet_F.pdf) | Automatique, sur un plateau de verre tournant | Jusqu'à 5 postes de 5 caméras, optiques télécentriques, mesures répétables au micron | Éjection pneumatique, jusqu'à 8 sorties (bonnes et mauvaises pièces) | Jusqu'à 36 000 pièces/h (10 par seconde) | À partir de 130 000 € (document d'environ 2012) |
+| Trieuse optique industrielle à bol vibrant | Vester Sensorcheck VSC ([annonce d'occasion](https://www.used-machines.com/vester+sortierautomat-sensorcheck+vsc-10c/gm-212-22857)), machines AOI asiatiques ([Made-in-China](https://fr.made-in-china.com/category23_Manufacturing-Processing-Machinery/Optical-Sorting-Machine_109.html)) | Bol vibrant + séparation en file | Caméras CCD/CMOS, objectifs télécentriques | Éjection pneumatique bonne pièce / rebut | 100 à 250 pièces/min | Environ 10 000 à 85 000 $ (prix catalogue) ; bol vibrant seul : environ 500 à 10 000 $ |
+| Trieuse mécanique par fentes | Modèles imprimés en 3D ([MakerWorld](https://makerworld.com/models/765163), [J. Alves](https://jpralves.net/post/2018/11/08/automatic-screw-sorter.html)) | Manuelle, la vis roule sur une rampe | Aucune : la vis tombe dans la première fente assez longue | Gravité, un bac par fente | Rapide à la main | Quelques euros de filament |
+| Trieuse amateur par vision et bras | [Trieur de vis de « Aad » (Hackaday, 2026)](https://hackaday.com/2026/08/08/robotic-screw-and-bolt-sorter-seeks-a-new-challenge/), [trieur de pièces sur table lumineuse (Hackaday, 2019)](https://hackaday.com/2019/02/12/) | Convoyeur puis goulotte vers une table éclairée par-dessous ; pièces simplement étalées en 2019 | Caméra au-dessus (ESP32-CAM à objectif M12 en 2026, webcam + OpenCV en 2019) | Portique ou bras qui saisit la pièce et la dépose dans un bac | Lente (une pièce à la fois) | Imprimante 3D recyclée + cartes ESP32 + PC |
+| Trieuse amateur sur plateau tournant | [Fab Academy Oulu (2026)](https://fabacademy.org/2026/labs/oulu/Machine_projects/Team1/) | Pièce posée à la main sur un plateau | Caméra ESP32-S3 | Plateau tourné par un moteur pas à pas, un servo pousse la pièce hors du plateau | Non publiée | Projet étudiant |
+| Trieuse de LEGO par IA | [Universal LEGO Sorter, D. West (2019)](https://www.raspberrypi.com/news/raspberry-pi-lego-sorter/) | Bac + plaques vibrantes qui isolent les pièces | Pi Camera + réseau ResNet-50 sur un PC portable, 2 927 types de pièces | Tapis et volets vers 18 bacs | 1 pièce toutes les 2 s | Plus de 2 ans de développement |
+
+*Tableau 3 : trieuses de vis et de petites pièces, machines voisines de notre trieur*
+
+**Ce que les trieuses de vis nous apprennent :**
+
+- **Isoler les pièces est le vrai problème mécanique.** Toutes les machines industrielles commencent par un bol vibrant, qui coûte à lui seul plus que tout notre budget. Les prototypes amateurs le contournent par une dépose à la main (Fab Academy) ou par un bras qui sépare les pièces collées (Aad). Un groupe d'étudiants de NTU note que les machines professionnelles coûtent jusqu'à 10 000 $ et pèsent plus de 600 kg ([NTU, 2022](https://blogs.ntu.edu.sg/ps5888-2022-g07/?p=6)).
+- **L'éclairage est maîtrisé partout.** On trouve un plateau de verre éclairé par-dessous et des optiques télécentriques en industrie, une table lumineuse chez les amateurs. Les étudiants d'Oulu ont constaté que l'éclairage dégradait leur détection et recommandent un éclairage contrôlé.
+- **Le plateau tournant indexé par moteur pas à pas est une solution classique.** Un brevet de trieur à bacs rotatifs note que le pas à pas sert à la fois de moteur et de repère de position ([US 6354590](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6354590)). C'est exactement notre choix (décision D7).
+- **Une vis se lit en ombre chinoise, une résistance non.** Une silhouette suffit pour mesurer une vis : un éclairage par-dessous et une caméra noir et blanc conviennent. Les anneaux d'une résistance ne se voient qu'en couleur, éclairés par-dessus, sur une pièce cylindrique et vernie qui fait des reflets. **Notre problème de vision est donc plus difficile** que celui d'une trieuse de vis, et l'éclairage de la boîte noire est notre point le plus critique.
+- **Le nombre de catégories pèse sur la mécanique.** Une trieuse industrielle n'a que 2 à 8 sorties (bonne pièce ou rebut). Une trieuse de rangement comme la nôtre ou celle de West a besoin de 13 à 18 bacs. Elle doit donc soit déplacer les bacs (plateau tournant), soit multiplier les volets.
+
+### 3.5 Ce qu'on en retient
+
+Les projets par vision butent sur la fiabilité de lecture, ceux par mesure sur l'alimentation pièce à pièce. Aucun ne combine lecture fiable de la couleur et tri vers de nombreux bacs. Les trieuses de vis montrent comment organiser la machine (poste de lecture éclairé, aiguillage indexé, contrôle de sortie), mais leur problème de vision est plus simple que le nôtre.
 
 ## 4. Technologies d'identification de la valeur
 
@@ -107,7 +132,7 @@ Deux approches : classer l'image entière (CNN type LeNet-5) ou détecter d'abor
 | Complexité logicielle | Faible | Moyenne | Élevée (jeu de données) |
 | Résistances abîmées ou décolorées | Lues correctement | Erreurs | Erreurs |
 
-*Tableau 3 : comparaison des méthodes d'identification de la valeur*
+*Tableau 4 : comparaison des méthodes d'identification de la valeur*
 
 **Le verrou principal de la vision est la couleur perçue** : éclairage, reflets sur le vernis, couleur du corps et anneaux voisins faussent la teinte. Toutes les sources convergent vers un éclairage diffus fermé et un fond uniforme comme condition nécessaire.
 
@@ -125,7 +150,7 @@ La partie la plus difficile n'est pas le tri final mais l'alimentation : isoler 
 | Bol vibrant | Vibration qui aligne les pièces en file | Industrie (composants vrac) | Coûteux, encombrant |
 | Tapis convoyeur | Défilement continu devant la caméra | Queen's | Résistances à espacer avant |
 
-*Tableau 4 : solutions d'alimentation pièce à pièce*
+*Tableau 5 : solutions d'alimentation pièce à pièce*
 
 ### 5.2 Actionneurs de tri (envoyer vers le bon bac)
 
@@ -133,11 +158,12 @@ La partie la plus difficile n'est pas le tri final mais l'alimentation : isoler 
 |---|---|---|---|
 | Volet servo gauche/droite | 2 | I. Adarsh | Simple mais limité |
 | Pyramide de tubes + solénoïdes | Jusqu'à 96 (tri binaire en cascade) | Swarthmore | Rapide, beaucoup d'actionneurs |
-| Plateau rotatif à bacs | 8 à 12 environ | Trinity, Cornell 2016 | Un seul moteur pas-à-pas, compact |
+| Plateau rotatif à bacs | 8 à 13 environ | Trinity, Cornell 2016, notre trieur (13 bacs) | Un seul moteur pas-à-pas, compact |
 | Chariot sur axe linéaire | Une rangée de bacs | UIC | Simple à piloter |
+| Soufflage pneumatique | 2 à 8 sorties | Trieuses de vis industrielles (QMTInspect-R, Vester) | Très rapide, mais demande de l'air comprimé |
 | Portique XY (type imprimante 3D) | Tiroirs d'un meuble de rangement | [Bradley University](https://vip.bradley.edu/resistor-sorter/) (NEMA 17) | Le plus flexible, le plus long à construire |
 
-*Tableau 5 : actionneurs de tri*
+*Tableau 6 : actionneurs de tri*
 
 ### 5.3 Unité de commande
 
@@ -148,43 +174,90 @@ La partie la plus difficile n'est pas le tri final mais l'alimentation : isoler 
 | Arduino UNO Q | Microprocesseur Linux + microcontrôleur sur une même carte, déjà prouvé sur ce cas ([Arduino](https://blog.arduino.cc/2026/02/19/arduino-uno-q-solves-the-classic-resistor-pile-issue/)) | Carte récente, moins de documentation |
 | ESP32 (+ ESP32-CAM) | Très bon marché, Wi-Fi | Puissance de calcul juste pour la vision |
 
-*Tableau 6 : cartes de commande envisageables*
+*Tableau 7 : cartes de commande envisageables*
 
 Une architecture courante sépare les rôles : un ordinateur embarqué (Raspberry Pi) pour la vision, un microcontrôleur (Arduino) pour les moteurs, reliés par liaison série. Le PIC32 de Cornell et nos cours sur PIC suivent la même logique côté commande.
 
-## 6. Synthèse et positionnement du projet
+## 6. Synthèse : comparaison avec les solutions existantes et positionnement
 
-Notre trieur se place sur la voie la moins aboutie mais la plus riche : lire le code couleur par vidéo, comme un humain, puis trier automatiquement. Les prototypes existants montrent que c'est faisable, mais aucun n'atteint une fiabilité suffisante en conditions réelles.
+Notre trieur se place sur la voie la moins aboutie mais la plus riche : lire le code couleur à la caméra, comme un humain, puis trier automatiquement. Les prototypes existants montrent que c'est faisable, mais aucun n'atteint une fiabilité suffisante en conditions réelles.
 
-### 6.1 Verrous techniques identifiés
+### 6.1 Notre solution en bref
 
-1. **Fiabilité de la lecture couleur** : 60 % de réussite seulement pour Queen's, chute à 72 % hors labo pour un CNN.
-1. **Alimentation en pièce unique** : pattes tordues, résistances emmêlées, blocages dans l'entonnoir.
+Rappel des choix déjà pris ou pressentis (voir `decisions.md`) :
+
+- **Alimentation** : la résistance est déposée à la main dans une gouttière en V, une à la fois (F1), avec une trémie automatique en amélioration.
+- **Lecture** : caméra USB à objectif M12 dans une boîte noire à dôme diffusant et bande LED. Un PC analyse l'image avec OpenCV et décode la valeur, contrôlée par la série E12.
+- **Tri** : l'ESP32 reçoit le numéro de bac par liaison USB série. Il tourne un plateau de 13 bacs (12 valeurs E12 et un bac de rejet) avec un moteur NEMA 17 et un capteur de position. Il ouvre ensuite une trappe à servo, et une barrière infrarouge confirme la chute de la pièce.
+- **Coût** : environ 170 € de matériel, options comprises jusqu'à environ 200 € (`07-liste-composants.md`).
+
+### 6.2 Comparaison globale
+
+| Critère | **Notre trieur** | Trieuse de vis industrielle | Trieuse de vis amateur par vision | Trieurs de résistances par vision | Trieurs de résistances par mesure |
+|---|---|---|---|---|---|
+| Exemples | — | QMTInspect-R, Vester VSC | Aad 2026, Fab Academy Oulu | Queen's, Arduino UNO Q, Cornell 2017 | Adarsh, Cornell 2016, Trinity, Swarthmore |
+| Alimentation | Manuelle, une pièce à la fois | Bol vibrant, entièrement automatique | Convoyeur et bras, ou à la main | À la main (12 pièces redressées chez Queen's) | Entonnoir, redresseur de pattes |
+| Ce qui est lu | Couleur des anneaux | Forme et dimensions | Forme et dimensions | Couleur des anneaux | Valeur électrique |
+| Éclairage | Boîte noire, dôme diffusant | Par-dessous et télécentrique | Table lumineuse | Variable, souvent peu maîtrisé | Sans objet |
+| Nombre de sorties | 13 bacs | 2 à 8 (bonne pièce ou rebut) | Plusieurs bacs | 0 à quelques bacs | 2 à 96 |
+| Actionneur de tri | Plateau tournant pas à pas + trappe servo | Soufflage pneumatique | Portique et pince, ou poussoir servo | Moteurs, ou tri à la main | Servos, solénoïdes, plateau rotatif |
+| Contrôle de la chute | Barrière infrarouge | Capteurs de sortie | Capteur piézo (Aad) | Non décrit | Non décrit |
+| Erreur de lecture | Bac de rejet + contrôle E12 | Éjection en rebut | Non décrit | Non décrit | Arrondi à la valeur E la plus proche |
+| Cadence | À mesurer (quelques secondes par pièce visées) | 100 à 600 pièces/min | Lente | Jusqu'à 30 s par pièce (cible RIT) | Environ 3 s par pièce (Adarsh) |
+| Fiabilité publiée | À mesurer | Très élevée (contrôle à 100 %) | Non publiée | 60 % de tris justes (Queen's) | Élevée (mesure directe) |
+| Coût | Environ 170 à 200 € | 10 000 à plus de 130 000 € | Quelques centaines d'euros | Quelques centaines d'euros | Quelques dizaines à centaines d'euros |
+
+*Tableau 8 : comparaison de notre trieur avec les solutions existantes*
+
+### 6.3 Comparaison fonction par fonction avec une trieuse de vis
+
+| Fonction | Trieuse de vis | Notre trieur | Conséquence pour nous |
+|---|---|---|---|
+| Isoler une pièce | Bol vibrant et rail de séparation | Dépose à la main dans une gouttière | Nous renonçons au vrac automatique en v1 : c'est hors budget et c'est le point le plus coûteux d'une trieuse |
+| Présenter la pièce | Plateau de verre tournant, pièce stable sur une face | Gouttière en V : la résistance est couchée et centrée | La forme cylindrique se prête bien à une gouttière. En revanche, il faut que les anneaux soient visibles, d'où un léger roulement possible à prévoir |
+| Éclairer | Par-dessous : la silhouette suffit | Par-dessus, diffus, dans une boîte noire | C'est notre point le plus critique : les reflets et les couleurs voisines faussent la lecture |
+| Identifier | Mesures géométriques en noir et blanc | Couleur de 4 anneaux, sens de lecture, décodage | Problème plus difficile, mais le contrôle par la série E12 détecte une partie des erreurs |
+| Décider | Bonne pièce ou rebut | Une valeur parmi 12, ou rejet | Plus de catégories, donc plus de bacs |
+| Aiguiller | Soufflage d'air comprimé, très rapide | Plateau tournant + trappe | Pas d'air comprimé dans un atelier étudiant ; le plateau donne 13 bacs avec un seul moteur |
+| Vérifier | Capteurs de sortie | Barrière infrarouge sous la trappe | Équivalent, à notre échelle |
+
+*Tableau 9 : fonctions d'une trieuse de vis comparées à celles de notre trieur*
+
+### 6.4 Ce qui nous distingue
+
+- **Le seul trieur de résistances par couleur qui trie physiquement vers plus de 10 bacs** parmi ceux recensés : le projet Arduino UNO Q ne trie pas, celui de Queen's trie mal, et les trieurs multi-bacs mesurent tous électriquement.
+- **Une architecture de trieuse de vis appliquée à la lecture de couleur** : poste de lecture fixe et éclairé, plateau de bacs indexé, contrôle de chute.
+- **Un coût environ 100 fois plus faible qu'une trieuse industrielle** (environ 200 € contre plus de 10 000 €), en contrepartie d'une alimentation manuelle et d'une cadence bien plus basse.
+- **Une gestion explicite des erreurs** (bac de rejet, contrôle E12, barrière de chute), que les prototypes de résistances recensés ne décrivent pas.
+
+### 6.5 Verrous techniques identifiés
+
+1. **Fiabilité de la lecture couleur** : 60 % de réussite seulement pour Queen's, et une chute à 72 % hors laboratoire pour un CNN.
+1. **Alimentation en pièce unique** : pattes tordues, résistances emmêlées, blocages dans l'entonnoir. Chez les trieuses de vis, c'est la partie la plus coûteuse.
 1. **Sens de lecture** : savoir quel anneau est le premier.
 1. **Synchronisation vision / mécanique** : la résistance doit être immobile et bien cadrée au moment de la capture.
 
-### 6.2 Choix proposés, justifiés par l'état de l'art
+### 6.6 Choix proposés, justifiés par l'état de l'art
 
 | Verrou | Choix proposé | Justification |
 |---|---|---|
 | Lecture couleur | OpenCV classique (HSV/Lab + seuils), sans deep learning au départ | Prouvé par le projet Arduino UNO Q ; pas de jeu de données à constituer |
-| Éclairage | Chambre fermée, LED blanches diffuses, fond uniforme | Condition commune à tous les projets qui fonctionnent |
-| Erreurs de lecture | Contrôle par série E12/E24 + bac « rejet » | Une valeur hors série signale une erreur ; on ne trie pas au hasard |
-| Alimentation | Chargement semi-manuel (goulotte, une pièce à la fois) | Le vrac automatique est hors de portée d'un projet SPI |
-| Tri | Plateau rotatif à bacs sur moteur pas-à-pas | Un seul actionneur pour 8 à 12 bacs, compact |
-| Commande | Raspberry Pi (vision) + Arduino (moteurs), ou Arduino UNO Q | Séparation des rôles éprouvée |
-| Périmètre | Résistances 4 anneaux, valeurs E12 courantes | Le cas le plus répandu ; 5 anneaux en évolution |
+| Éclairage | Boîte noire, dôme diffusant, LED blanches, fond uniforme | Condition commune à tous les projets qui fonctionnent, vis comprises |
+| Erreurs de lecture | Contrôle par la série E12 + bac de rejet | Une valeur hors série signale une erreur ; on ne trie pas au hasard |
+| Alimentation | Dépose manuelle dans une gouttière (F1), trémie en amélioration | Le bol vibrant des trieuses de vis est hors budget |
+| Tri | Plateau de 13 bacs sur moteur pas à pas NEMA 17, sous une trappe fixe | Un seul actionneur pour 13 bacs, solution classique des trieurs à bacs rotatifs |
+| Commande | PC (vision) + ESP32 (moteurs), reliés en USB série | Séparation des rôles éprouvée (Aad, Cornell, Raspberry Pi + Arduino) |
+| Périmètre | Résistances à 4 anneaux, une décade E12 | Le cas le plus répandu ; 5 anneaux en évolution |
 
-*Tableau 7 : choix proposés pour notre trieur*
+*Tableau 10 : choix proposés pour notre trieur*
 
 **Option d'amélioration** : ajouter un contact de mesure au poste de lecture. Mesure et vision se vérifieraient mutuellement, ce qu'aucun projet recensé ne fait.
 
-### 6.3 Questions ouvertes pour l'équipe
+### 6.7 Questions ouvertes pour l'équipe
 
-- Combien de bacs (donc de valeurs) vise-t-on ?
-- Quelle cadence cible (s par résistance) ? Le RIT visait moins de 30 s.
+- Quelle cadence cible (secondes par résistance) ? Le RIT visait moins de 30 s.
 - Quel taux de lecture correcte fixe-t-on comme critère de réussite ?
-- Quel budget pour la caméra et la carte de commande ?
+- Faut-il viser une alimentation automatique (trémie F2 ou roue F3) dès la v1 ?
 
 ## 7. Législation et normes applicables
 
@@ -200,7 +273,7 @@ Le volet alimentaire du projet de l'an dernier ne s'applique plus. Pour un trieu
 | Sécurité photobiologique | IEC 62471 | Éclairage LED de la chambre de prise de vue : LED courantes, groupe de risque à vérifier sur la fiche technique |
 | Déchets électroniques | Directive DEEE 2012/19/UE, RoHS 2011/65/UE | Composants conformes RoHS, résistances rejetées et prototype en fin de vie à recycler |
 
-*Tableau 8 : textes réglementaires et normes applicables*
+*Tableau 11 : textes réglementaires et normes applicables*
 
 La protection des données (RGPD) est hors sujet : les images ne contiennent que des composants.
 
@@ -238,6 +311,22 @@ La protection des données (RGPD) est hors sujet : les images ne contiennent que
 - [Bradley University — Resistor Sorter](https://vip.bradley.edu/resistor-sorter/)
 - [GitHub — Resistance Is Futile](https://github.com/jvanburen/rif)
 - [Hackaday — Resistorganizer](https://hackaday.com/blog/page/1441/?cat=PHL)
+
+**Trieuses de vis et de petites pièces**
+
+- [Qualimatest QMTInspect-R — fiche technique (Saphir)](https://www.saphir.fr/pdf/Products/QMTInspect-R_Datasheet_F.pdf)
+- [Qualimatest QMTInspect-R — documentation détaillée](https://www.saphir.fr/pdf/Details_products_documentations/QMTInspect-R_documentation_detaille_F.pdf)
+- [Vester Sensorcheck VSC-10C — annonce de machine d'occasion](https://www.used-machines.com/vester+sortierautomat-sensorcheck+vsc-10c/gm-212-22857)
+- [Made-in-China — machines de tri de vis par inspection CCD](https://fr.made-in-china.com/category23_Manufacturing-Processing-Machinery/Optical-Sorting-Machine_109.html)
+- [US 7669707 — Material handling apparatus with integrated part sorter (bol vibrant + caméra)](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/7669707)
+- [US 6354590 — Rotary bin sorter](https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6354590)
+- [Hackaday — Robotic Screw And Bolt Sorter Seeks A New Challenge (2026)](https://hackaday.com/2026/08/08/robotic-screw-and-bolt-sorter-seeks-a-new-challenge/)
+- [Hackaday — This Light-Up Sorter Is A Bright Idea (2019)](https://hackaday.com/2019/02/12/)
+- [Fab Academy Oulu — Intelligent sorter (2026)](https://fabacademy.org/2026/labs/oulu/Machine_projects/Team1/)
+- [NTU — projet de trieuse de vis PS5888 (2022)](https://blogs.ntu.edu.sg/ps5888-2022-g07/?p=6)
+- [J. Alves — Automatic screw sorter (2018)](https://jpralves.net/post/2018/11/08/automatic-screw-sorter.html)
+- [MakerWorld — trieuse de vis par longueur imprimée en 3D](https://makerworld.com/models/765163)
+- [Raspberry Pi — Universal LEGO sorter de D. West (2019)](https://www.raspberrypi.com/news/raspberry-pi-lego-sorter/)
 
 **Recherche**
 
