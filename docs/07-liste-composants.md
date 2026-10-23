@@ -2,6 +2,7 @@
 
 > Sections du rapport : « Présentation des composants », « Choix et justification des composants » et « Budget ».
 > Les prix sont des **estimations** (ordre de grandeur AliExpress et distributeurs français, octobre 2026), **à vérifier le jour de la commande**. Ils servent de « prévu » dans le budget (`04` §6) ; le « réel » sera relevé sur les factures.
+> La comparaison des références candidates, avec fiches techniques et calculs, est dans `08-choix-des-composants.md`.
 
 ## 1. Ce que la liste suppose
 
@@ -13,7 +14,7 @@
 | Référence du plateau | Capteur optique à fourche + drapeau imprimé sur le plateau | Pressenti | `06` §4.2 |
 | Trappe | Servo MG90S + volet | Pressenti (D12) | `06` §5 |
 | Contrôle de chute | Barrière infrarouge sous la trappe | Pressenti (D12) | `06` §6 |
-| Caméra | Module USB 1080p à objectif M12, reliée au PC | Pressenti (D14) | §1.1 |
+| Caméra | Module USB 1080p (capteur OV2710) avec objectif M12 de 8 ou 12 mm, reliée au PC | Pressenti (D14) | §1.1, `08` §5 |
 | Éclairage | Bande LED à fort rendu des couleurs sous un dôme blanc imprimé (L3), polarisation (L4) en option | Pressenti (D6) | `05` §2 |
 | Commande | ESP32 classique, liaison USB série avec le PC | Pris (D3) / pressenti (D10) | `06` §2 |
 | Arrivée des pièces | Dépôt manuel, une pièce à la fois (F1) | Pressenti (D8) | `05` §3.2 |
@@ -102,7 +103,8 @@ Les mots-clés sont en anglais : c'est ainsi que les annonces AliExpress sont le
 | V1 | Module caméra USB 1080p | Prise de vue, reliée au PC | UVC (sans pilote), objectif M12 × 0,5 à mise au point manuelle, **avec filtre IR (« IR-cut »)**, réglage manuel de l'exposition et de la balance des blancs (ex. ELP à capteur OV2710 ou équivalent) | 1 | 30,00 | `ELP USB camera 1080P M12 lens OV2710` |
 | V2 | Bande LED COB | Éclairage diffus sous le dôme | **IRC ≥ 90**, 5 000 à 6 500 K, 5 V, 1 m (≈ 50 cm utilisés). Si la version IRC ≥ 90 n'existe qu'en 12 V, la prendre en 12 V et l'alimenter directement sur le 12 V | 1 | 5,00 | `COB LED strip 5V CRI 90` |
 | V3 | Module MOSFET | Allumer les LED depuis l'ESP32, sans PWM | D4184 (AOD4184), commandable en 3,3 V | 1 | 1,00 | `D4184 MOSFET module` |
-| | **Sous-total** | | | | **36,00** | |
+| V4 | Lot d'objectifs M12 (6, 8 et 12 mm) | Champ adapté à la pièce | Filetage M12 × 0,5. L'objectif fourni (souvent 2,1 à 3,6 mm) oblige à placer la caméra à 1,5 à 2,5 cm de la pièce, sans place pour l'éclairage (`08` §5). Alternative : commander directement la version à zoom 2,8–12 mm de la caméra | 1 lot | 6,00 | `M12 lens set 8mm 12mm` |
+| | **Sous-total** | | | | **42,00** | |
 
 ### 4.4 Mécanique
 
@@ -128,10 +130,9 @@ Les mots-clés sont en anglais : c'est ainsi que les annonces AliExpress sont le
 | Réf. | Composant | Intérêt | Qté | Prix estimé (€) | Mots-clés AliExpress |
 |------|-----------|---------|-----|-----------------|----------------------|
 | O1 | Carte d'extension à borniers pour ESP32 38 broches | Câblage sans soudure ; utile car certaines cartes ESP32 sont trop larges pour une plaque d'essai. Vérifier la largeur de la carte C1 | 1 | 2,50 | `ESP32 38 pin breakout board terminal` |
-| O2 | Lot d'objectifs M12 (6, 8 et 12 mm) | L'objectif fourni est souvent grand angle (2,8 à 3,6 mm) : il faut placer la caméra très près et l'image est déformée sur les bords. Un 8 ou 12 mm permet de reculer et de grossir les bagues | 1 lot | 6,00 | `M12 lens set 8mm 12mm` |
-| O3 | Film polarisant linéaire | Tester la polarisation croisée contre les reflets (L4, `05` §2.2) | 1 feuille | 4,00 | `linear polarizer film sheet` |
-| O4 | Inserts filetés en laiton M3 à poser à chaud | Fixations plus solides et démontables que des vis directement dans le PLA | lot de 50 | 3,00 | `M3 heat set insert brass` |
-| | **Sous-total options** | | | **15,50** | |
+| O2 | Film polarisant linéaire | Tester la polarisation croisée contre les reflets (L4, `05` §2.2) | 1 feuille | 4,00 | `linear polarizer film sheet` |
+| O3 | Inserts filetés en laiton M3 à poser à chaud | Fixations plus solides et démontables que des vis directement dans le PLA | lot de 50 | 3,00 | `M3 heat set insert brass` |
+| | **Sous-total options** | | | **9,50** | |
 
 ### 4.7 Pièces de rechange conseillées
 
@@ -151,10 +152,10 @@ Les capteurs à fourche (lot de 5) et la deuxième barrière infrarouge servent 
 | Payé par | Indispensable (€) | Options (€) | Rechanges (€) | Maximum (€) |
 |----------|-------------------|-------------|---------------|-------------|
 | CESI (consommables) | 64,00 | 8,00 (K5, si validé) | — | 72,00 |
-| Équipe (AliExpress) | 104,50 | 15,50 | 10,50 | 130,50 |
-| **Total** | **168,50** | **23,50** | **10,50** | **202,50** |
+| Équipe (AliExpress) | 110,50 | 9,50 | 10,50 | 130,50 |
+| **Total** | **174,50** | **17,50** | **10,50** | **202,50** |
 
-Pour l'équipe, la partie indispensable représente environ 17 à 26 € par personne pour une équipe de 4 à 6. L'an dernier, le matériel avait coûté environ 106 €.
+Pour l'équipe, la partie indispensable représente environ 18 à 28 € par personne pour une équipe de 4 à 6. L'an dernier, le matériel avait coûté environ 106 €.
 
 ## 6. Bilan de puissance (estimation, à mesurer)
 
@@ -172,7 +173,7 @@ Côté 5 V : au pire ≈ 1,7 A, soit ≈ 10 W, ce qui fait ≈ 0,85 A tiré sur 
 
 **À la commande**
 1. **Caméra** : prendre la version **avec filtre IR** (« IR-cut », « day »). Les versions « no IR filter » ou « night vision » donnent des couleurs fausses, ce qui rend la lecture des bagues impossible.
-2. **Bloc secteur** : prise européenne et marquage CE (sécurité électrique, voir `02`). Les produits sans marquage sont fréquents sur AliExpress.
+2. **Bloc secteur** : prise européenne et marquage CE (sécurité électrique, voir `02` §7). Les produits sans marquage sont fréquents sur AliExpress.
 3. **Résistances (CESI)** : vérifier que la décade de démonstration est complète, par exemple 1 k ; 1,2 k ; 1,5 k ; 1,8 k ; 2,2 k ; 2,7 k ; 3,3 k ; 3,9 k ; 4,7 k ; 5,6 k ; 6,8 k ; 8,2 k.
 4. **Filament (CESI)** : confirmer le diamètre selon l'imprimante du FabLab avant que la commande parte.
 5. **Délais** : compter 1 à 3 semaines pour AliExpress. Commander en premier la caméra et l'ESP32, et commencer les essais de vision avec une webcam ou un téléphone en attendant.

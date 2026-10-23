@@ -17,5 +17,5 @@ Une ligne par décision importante : date, décision, options comparées, justif
 | | D11 | Moteur du plateau | Pressentie : NEMA 17 + TMC2209 + capteur optique à fourche | 5 moteurs comparés | Précision et couple pour un plateau chargé ; le 28BYJ-48 est lent et son réducteur a du jeu (`06` §4, `07` §1.1) | `06`, `07` |
 | | D12 | Mécanisme de lâcher et contrôle de chute | Pressentie : servo + volet, barrière infrarouge | `06` §5 et §6 | | `06` |
 | | D13 | Langage de programmation de l'ESP32 | Pressentie : Arduino-ESP32 | Arduino, ESP-IDF, MicroPython (compétences de l'équipe à confirmer) | `06` §8 | `06` |
-| | D14 | Caméra | Pressentie : module USB 1080p à objectif M12, avec filtre IR | Webcam grand public, microscope USB | Mise au point manuelle fixe, compacte, reconnue sans pilote par OpenCV | `07` §1.1 |
+| | D14 | Caméra | Pressentie : module USB 1080p (OV2710) à objectif M12 de 8 ou 12 mm, avec filtre IR | Logitech C920, microscope USB | Mise au point manuelle fixe, champ de 40 mm à 5-8 cm de distance, reconnue sans pilote par OpenCV | `07` §1.1, `08` §5 |
 | 2026-10-23 | D15 | Achats : consommables (filament, résistances de test) par le CESI, le reste sur AliExpress aux frais de l'équipe | **Prise** | | L'équipe garde la machine à la fin du projet | `07` §2 |

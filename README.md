@@ -15,6 +15,7 @@ Projet SPI de 2ᵉ année (S3E, CESI) : une machine qui identifie une résistanc
 | [`docs/decisions.md`](docs/decisions.md) | Journal des décisions (prises et ouvertes) |
 | [`docs/06-chaine-de-tri.md`](docs/06-chaine-de-tri.md) | Chaîne de tri après la lecture de la valeur : liaison, machine à états, moteur, trappe, capteurs, défaillances |
 | [`docs/07-liste-composants.md`](docs/07-liste-composants.md) | Liste des composants : consommables payés par le CESI, matériel à la charge de l'équipe (AliExpress), coûts, précautions |
+| [`docs/08-choix-des-composants.md`](docs/08-choix-des-composants.md) | Choix et justification des composants : principe, besoin, références comparées, dimensionnement (parties 6 et 7 du rapport) |
 
 ## Référence
 

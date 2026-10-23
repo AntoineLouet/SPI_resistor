@@ -77,7 +77,7 @@ Prévu : estimations de `07-liste-composants.md` (les références entre parenth
 
 | Poste | Option retenue | Payé par | Prévu (€) | Réel (€) |
 |-------|----------------|----------|-----------|----------|
-| Caméra + optique | Module USB 1080p à objectif M12 (V1) | Équipe | 30,00 | |
+| Caméra + optique | Module USB 1080p à objectif M12 + lot d'objectifs (V1, V4) | Équipe | 36,00 | |
 | Éclairage (LED, diffuseur) | Bande LED IRC ≥ 90 + module MOSFET (V2, V3) ; dôme imprimé | Équipe | 6,00 | |
 | ESP32 + driver | ESP32 DevKit + TMC2209 + condensateurs (C1, C3, C4) | Équipe | 10,00 | |
 | Servos / moteur pas à pas | NEMA 17 + servo MG90S (C2, C5) | Équipe | 11,50 | |
@@ -87,7 +87,7 @@ Prévu : estimations de `07-liste-composants.md` (les références entre parenth
 | Filament d'impression 3D | PLA noir + blanc (K1, K2) | CESI | 44,00 | |
 | Résistances de test | Assortiments E12 et film métal (K3, K4) | CESI | 20,00 | |
 | Calcul (PC ou Raspberry Pi) | PC d'un membre de l'équipe | — | 0,00 | |
-| **Total matériel** | Hors options et rechanges (jusqu'à 34 € de plus, `07` §5) | | **168,50** | |
+| **Total matériel** | Hors options et rechanges (jusqu'à 28 € de plus, `07` §5) | | **174,50** | |
 | RH théorique (jours × CMJ) | | | | |
 
 ## 7. Analyse des risques (premier jet)
