@@ -14,6 +14,7 @@ Projet SPI de 2ᵉ année (S3E, CESI) : une machine qui identifie une résistanc
 | [`docs/05-eclairage-et-mecanique.md`](docs/05-eclairage-et-mecanique.md) | Série E12, éclairage et boîte noire, solutions mécaniques et matrice de choix |
 | [`docs/decisions.md`](docs/decisions.md) | Journal des décisions (prises et ouvertes) |
 | [`docs/06-chaine-de-tri.md`](docs/06-chaine-de-tri.md) | Chaîne de tri après la lecture de la valeur : liaison, machine à états, moteur, trappe, capteurs, défaillances |
+| [`docs/07-liste-composants.md`](docs/07-liste-composants.md) | Liste des composants : consommables payés par le CESI, matériel à la charge de l'équipe (AliExpress), coûts, précautions |
 
 ## Référence
 

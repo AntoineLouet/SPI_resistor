@@ -73,17 +73,22 @@ R = réalise, A = approuve (un seul par tâche), C = consulté, I = informé.
 
 Le rapport de l'an dernier distinguait les coûts RH théoriques (coût moyen journalier de 83,16 €) et les achats réels, avec prévu vs actualisé. Même format :
 
-| Poste | Option retenue | Prévu (€) | Réel (€) |
-|-------|----------------|-----------|----------|
-| Caméra + optique | ❓ | | |
-| Éclairage (LED, diffuseur) | ❓ | | |
-| ESP32 + driver | ❓ | | |
-| Servos / moteur pas à pas | ❓ | | |
-| Matériaux (impression 3D, visserie, bacs) | ❓ | | |
-| Électronique (câbles, alimentation, PCB) | ❓ | | |
-| Calcul (PC ou Raspberry Pi) | ❓ | | |
-| **Total matériel** | | | |
-| RH théorique (jours × CMJ) | | | |
+Prévu : estimations de `07-liste-composants.md` (les références entre parenthèses renvoient à ce document).
+
+| Poste | Option retenue | Payé par | Prévu (€) | Réel (€) |
+|-------|----------------|----------|-----------|----------|
+| Caméra + optique | Module USB 1080p à objectif M12 (V1) | Équipe | 30,00 | |
+| Éclairage (LED, diffuseur) | Bande LED IRC ≥ 90 + module MOSFET (V2, V3) ; dôme imprimé | Équipe | 6,00 | |
+| ESP32 + driver | ESP32 DevKit + TMC2209 + condensateurs (C1, C3, C4) | Équipe | 10,00 | |
+| Servos / moteur pas à pas | NEMA 17 + servo MG90S (C2, C5) | Équipe | 11,50 | |
+| Capteurs | Fourche optique + barrière infrarouge (C6, C7) | Équipe | 5,00 | |
+| Mécanique (roulement, moyeu, visserie) | M1 à M3 | Équipe | 11,00 | |
+| Électronique (câbles, alimentation, carte) | A1 à A5, P1 à P4 | Équipe | 31,00 | |
+| Filament d'impression 3D | PLA noir + blanc (K1, K2) | CESI | 44,00 | |
+| Résistances de test | Assortiments E12 et film métal (K3, K4) | CESI | 20,00 | |
+| Calcul (PC ou Raspberry Pi) | PC d'un membre de l'équipe | — | 0,00 | |
+| **Total matériel** | Hors options et rechanges (jusqu'à 34 € de plus, `07` §5) | | **168,50** | |
+| RH théorique (jours × CMJ) | | | | |
 
 ## 7. Analyse des risques (premier jet)
 
