@@ -17,7 +17,7 @@
 | Éclairage | Bande LED à fort rendu des couleurs sous un dôme blanc imprimé (L3), polarisation (L4) en option | Pressenti (D6) | `05` §2 |
 | Commande | ESP32 classique, liaison USB série avec le PC | Pris (D3) / pressenti (D10) | `06` §2 |
 | Arrivée des pièces | Dépôt manuel, une pièce à la fois (F1) | Pressenti (D8) | `05` §3.2 |
-| Achats | Consommables par le CESI, le reste sur AliExpress aux frais de l'équipe | Pris (D15) | §2 |
+| Achats | ~~Consommables par le CESI, le reste sur AliExpress~~ → **tout par le CESI, 200 € max** | Pris (D16) | `08` |
 
 ### 1.1 Justification des trois choix qui fixent la liste
 
@@ -32,6 +32,8 @@
 **Module caméra USB à objectif M12** : la mise au point est manuelle et reste fixe une fois l'objectif vissé, ce qui donne des images reproductibles. Le module est petit et se fixe facilement dans la boîte noire. Il est reconnu sans pilote (norme UVC) par OpenCV sur le PC, puis sur un Raspberry Pi si la machine devient autonome. Écartés : la webcam grand public (autofocus qui peut changer de réglage, encombrante) et le microscope USB (LED intégrées sources de reflets, rendu des couleurs médiocre, champ petit).
 
 ## 2. Qui paie quoi
+
+> ⚠️ **Remplacé par D16** : tout passe par le CESI, plafond 200 €. Le bon de commande priorisé est dans [`08-bon-de-commande.md`](08-bon-de-commande.md). Les prix ci-dessous (AliExpress) sont à relever d'environ 50 % chez un distributeur français.
 
 - **Le CESI paie les consommables** : ce qui est consommé pendant le projet ou rendu à la fin (restes de filament, résistances de test). Commande passée par le responsable de formation.
 - **L'équipe paie tout ce qui reste sur la machine**, pour pouvoir la garder après le projet. Commande sur **AliExpress**.

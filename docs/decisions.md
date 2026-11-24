@@ -18,4 +18,5 @@ Une ligne par décision importante : date, décision, options comparées, justif
 | | D12 | Mécanisme de lâcher et contrôle de chute | Pressentie : servo + volet, barrière infrarouge | `06` §5 et §6 | | `06` |
 | | D13 | Langage de programmation de l'ESP32 | Pressentie : Arduino-ESP32 | Arduino, ESP-IDF, MicroPython (compétences de l'équipe à confirmer) | `06` §8 | `06` |
 | | D14 | Caméra | Pressentie : module USB 1080p à objectif M12, avec filtre IR | Webcam grand public, microscope USB | Mise au point manuelle fixe, compacte, reconnue sans pilote par OpenCV | `07` §1.1 |
-| 2026-10-23 | D15 | Achats : consommables (filament, résistances de test) par le CESI, le reste sur AliExpress aux frais de l'équipe | **Prise** | | L'équipe garde la machine à la fin du projet | `07` §2 |
+| 2026-10-23 | D15 | Achats : consommables (filament, résistances de test) par le CESI, le reste sur AliExpress aux frais de l'équipe | **Remplacée par D16** | | L'équipe garde la machine à la fin du projet | `07` §2 |
+| 2026-11-24 | D16 | Achats : tout le matériel passe par le CESI, plafond 200 € TTC | **Prise** | D15 (CESI + AliExpress) | Pas de commande AliExpress ; liste priorisée pour tenir dans le plafond aux prix des distributeurs français | `08` |
