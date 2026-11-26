@@ -85,6 +85,6 @@ Faute de référence chez les fournisseurs autorisés ou pour tenir le budget :
 
 ## 5. Avant d'envoyer
 
-- [ ] Filament : 1,75 mm convient à l'imprimante du FabLab (sinon 2,85 mm).
+- [x] Filament : 1,75 mm confirmé pour l'imprimante du FabLab.
 - [ ] Caméra B0506 encore en stock.
 - [ ] Total final sur le site Gotronic, livraison offerte en point relais.

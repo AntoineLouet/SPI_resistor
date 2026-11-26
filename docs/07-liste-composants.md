@@ -47,7 +47,7 @@
 
 | Réf. | Article | Spécification à respecter | Qté | Prix estimé (€) |
 |------|---------|---------------------------|-----|-----------------|
-| K1 | Filament PLA noir mat | **1,75 mm** ⚠️ (2,85 mm si l'imprimante du FabLab est une Ultimaker), bobine de 1 kg. Le noir mat limite les reflets dans la boîte | 1 | 22,00 |
+| K1 | Filament PLA noir mat | **1,75 mm** (confirmé), bobine de 1 kg. Le noir mat limite les reflets dans la boîte | 1 | 22,00 |
 | K2 | Filament PLA blanc | Même diamètre que K1. Bobine de 250 ou 500 g si le fournisseur en propose, sinon 1 kg | 1 | 22,00 |
 | K3 | Assortiment de résistances E12, film carbone 5 % | ¼ W, **4 bandes**, corps beige. Toutes les valeurs E12 d'au moins 10 Ω à 1 MΩ, **au moins 10 pièces par valeur**. Vérifier la liste des valeurs : beaucoup de kits sautent 1,2 k, 3,9 k ou 8,2 k et ajoutent des valeurs E24 (2 k, 5,1 k) | 1 | 12,00 |
 | K4 | Assortiment de résistances film métal 1 % | ¼ W, 5 bandes, corps bleu, au moins 10 pièces par valeur. Sert à tester la vision sur des corps bleus (bagues bleues masquées, `05` §2.4) | 1 | 8,00 |
